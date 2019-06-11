@@ -1,0 +1,53 @@
+.header-top .icon-font{
+    font-size :2em;
+}
+.notification-header{
+    width: 40px ;
+}
+
+.box-notification{
+    width: 350px ;
+    height: 300px;
+    background-color: #fff;
+    z-index: 2;
+    box-shadow: 0 4px 12px 4px rgba(0,0,0,.1);
+    font-family: Noto Sans;
+    font-size: 14px;
+    overflow-y: auto;
+}
+
+.box-notification::-webkit-scrollbar-track
+{
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+.box-notification::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+.box-notification::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #c6c6c6;
+}
+
+.info-style{
+    font-style: italic;
+}
+.date-style{
+    font-size: 12px;
+    text-align: right;
+}
+
+.box-notification ul{
+    list-style-type: none;
+}
+
+.box-notification ul li{
+    padding: 20px;
+    border-bottom: 1px solid #ccc; 
+}
