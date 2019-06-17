@@ -3,7 +3,7 @@ import './Resources/css/App.css';
 import NavBar from './Component/NavBar';
 import Header from './Component/Header';
 import Home from './Component/Home';
-
+import Report from './Component/Report';
 function App() {
   return (
     <div className="App">
@@ -11,6 +11,7 @@ function App() {
       <div className="Body">
         <Header></Header>
         <Home></Home>
+        <Report></Report>
       </div>
     </div>
   );
