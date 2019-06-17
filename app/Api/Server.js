@@ -1,0 +1,46 @@
+var fs = require('fs');
+
+const express = require('express');
+
+
+var cors = require('cors');
+
+const bodyParser = require('body-parser');
+
+
+const logger = require('morgan');
+
+
+var mongo = require('mongodb').MongoClient;
+
+
+const API_PORT = 3001;
+const app = express();
+app.use(cors());
+const router = express.Router();
+
+
+var url = 'mongodb://localhost:27017/';
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(logger('dev'));
+
+
+router.get('/getData', (req, res) => {
+    var url = 'mongodb://localhost:27017/';
+        mongo.connect(url,{useNewUrlParser:true},(err,mg)=>{
+            var dbo = mg.db('test');
+            dbo.collection('users').find({}).toArray((err,result) => {
+
+                if (err) return res.json({ success: false, error: err });
+                return res.json({ success: true, data: result });
+                
+            });
+
+        });
+  });
+
+app.use('/api', router);
+
+app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
