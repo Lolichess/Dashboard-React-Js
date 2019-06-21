@@ -4,6 +4,7 @@
     height: 600px;
     overflow-y:auto;
     font-family: Noto Sans;
+    z-index: -1;
 }
 
 th{

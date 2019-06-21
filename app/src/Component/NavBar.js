@@ -2,6 +2,7 @@ import  React, {Component} from 'react';
 import { FaHome } from 'react-icons/fa';
 import { IconContext } from "react-icons";
 import '../Resources/css/NavBar.css';
+import { Link } from 'react-router-dom';
 class NavBar extends Component{
 
     constructor(props){
@@ -11,12 +12,12 @@ class NavBar extends Component{
             list :[
                 {
                     name : 'Home',
-                    url : 'index.js',
+                    url : '/',
                     icon : 'FaHome',
                 },
                 {
                     name: 'Report Seller',
-                    url : 'report.js',
+                    url : '/report',
                     icon : 'FaDollarSign',
                 }
                 ,
@@ -52,7 +53,7 @@ class NavBar extends Component{
 
 
     render(){
-        const nav = this.state.list.map( x => <li> <IconContext.Provider value={{className: "icon-font" }}>  <FaHome /> </IconContext.Provider> {x.name}</li>);
+        const nav = this.state.list.map( x => <li> <Link to={x.url}> <IconContext.Provider value={{className: "icon-font" }}>  <FaHome /> </IconContext.Provider> {x.name}</Link></li>);
         return(
             <div className='nav-bar-left'>
                 <div className="logo-header">

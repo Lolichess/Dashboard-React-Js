@@ -1,3 +1,12 @@
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+	host : 'localhost',
+	user : 'root',
+	password : '',
+	database : 'reports'
+});
+
 var fs = require('fs');
 
 const express = require('express');
@@ -28,7 +37,7 @@ app.use(logger('dev'));
 
 
 router.get('/getData', (req, res) => {
-    var url = 'mongodb://localhost:27017/';
+     /*var url = 'mongodb://localhost:27017/';
         mongo.connect(url,{useNewUrlParser:true},(err,mg)=>{
             var dbo = mg.db('test');
             dbo.collection('users').find({}).toArray((err,result) => {
@@ -38,7 +47,17 @@ router.get('/getData', (req, res) => {
                 
             });
 
-        });
+        });*/
+
+		console.log("Connected!!");
+		var sql = "SELECT * FROM report_total";
+		con.query(sql,function(err,result){
+			if(err) throw err;
+			return res.json({success:true,data:result});
+		});
+
+
+
   });
 
 app.use('/api', router);
