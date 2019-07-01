@@ -10,12 +10,17 @@
     "@fortawesome/react-native-fontawesome": "^0.1.0",
     "mongodb": "^3.2.7",
     "react": "^16.8.6",
+    "react-data-export": "^0.5.0",
     "react-dom": "^16.8.6",
+    "react-export-excel": "^0.5.3",
     "react-icons": "^3.7.0",
+    "react-json-excel": "^1.0.0",
+    "react-json-to-csv": "^1.0.4",
     "react-native": "^0.59.9",
     "react-native-svg": "^9.5.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
+    "react-xlsx-workbook": "0.0.5",
     "set-default-browser": "^1.0.1"
   },
   "scripts": {

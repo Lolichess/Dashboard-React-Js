@@ -3,6 +3,11 @@ import '../Resources/css/Table.css';
 import { FaChevronLeft} from 'react-icons/fa';
 import { FaChevronRight } from 'react-icons/fa';
 import { IconContext } from "react-icons";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import CsvDownload from 'react-json-to-csv'
+
+
 
 class Table extends Component{
     constructor(props){
@@ -14,7 +19,16 @@ class Table extends Component{
             ],
             limit:10,
             pagination:1,
+            startDate: new Date(),
+            lastDate: new Date(),
+            lastUsers:[
+
+            ]
         };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleChangeLast = this.handleChangeLast.bind(this);
+        this.search = this.search.bind(this);
     }
 
     componentDidMount() {
@@ -25,6 +39,7 @@ class Table extends Component{
             console.log(data);
             this.setState({
                 users: data['data'],
+                lastUsers : data['data'],
             })
         })
         .catch(console.log)
@@ -44,6 +59,18 @@ class Table extends Component{
 
     }
 
+    handleChange(date) {
+        this.setState({
+            startDate: date
+        });
+    }
+
+    handleChangeLast(date) {
+        this.setState({
+            lastDate: date
+        });
+    }
+
     increment = () =>{
             this.setState({
                 index : this.state.index+1,
@@ -57,53 +84,110 @@ class Table extends Component{
             });
     }
 
+    search = () => {
+
+        this.setState({
+            users :  this.state.lastUsers.filter( users => new Date(users.invoice_date) - this.state.startDate > 0 &&  this.state.lastDate   - new Date(users.invoice_date) > 0  ),
+        });
+
+
+
+       
+        console.log(this.state.startDate+" "+this.state.lastDate);
+    }
+
     defineStructure = () =>{
         const users = this.state.users.map((user,index) => {
                 if(this.state.index=='') return
                 if (index<=this.state.index * this.state.limit && index>(this.state.index-1) * this.state.limit ) {
                     return  <tr>
-                                <th>{user.Manufacture}</th>
-                                <th>{user.Warehouse}</th>
-                                <th>{user.SaleID}</th>
-                                <th>{user.StoreOrderID}</th>
-                                <th>{user.Order_date}</th>
-                                <th>{user.Qty}</th>
-                                <th>{user.Retail_Price}</th>
-                                <th>{user.Total_item_cost}</th>
-                                <th>{user.Shipping}</th>
-                                <th>{user.Tax}</th>
-                                <th>{user.Total_cost}</th>
-                                <th>{user.MarketPlace_fee}</th>
+                                <th>{user.transaction_id}</th>
+                                <th>{user.source}</th>
+                                <th>{user.manufacture}</th>
+                                <th>{user.warehouse_id}</th>
+                                <th>{user.po}</th>
+                                <th>{user.saleID}</th>
+                                <th>{user.name}</th>
+                                <th>{user.qty}</th>
+                                <th>{user.transaction_date}</th>
+                                <th>{user.gross_sale}</th>
+                                <th>{user.transaction_comission}</th>
+                                <th>{user.Marketplace_fee}</th>
+                                <th>{user.trasaction_tax}</th>
+                                <th>{user.Net}</th>
+                                <th>{user.invoice_date}</th>
+                                <th>{user.Total_Item_cost}</th>
+                                <th>{user.shipping_cost}</th>
+                                <th>{user.invoice_tax}</th>
+                                <th>{user.total_cost}</th>
                                 <th>{user.Margin_gross_dolar}</th>
-                                <th>{user.Margin_gross_per}</th>
-                                <th>{user.MarketPlace}</th>
-                                <th>{user.Vendor}</th>
-                                <th>{user.paymentID}</th>
+                                <th>{user.Margin_gross_percente}</th>
+                                <th>{user.Marketplace}</th>
+                                <th>{user.vendor}</th>
+                                <th>{user.Month}</th>
+                                <th>{user.VendorInFba}</th>
+                                <th>{user.Date_insert}</th>
+                                <th>{user.Notes}</th>
                             </tr>
                 }});
+
+                const dat = (
+
+                    <CsvDownload data={this.state.users} />
+                )
         return(
+            
             <div className="table">
+            <div className="table-date-form">
+                <div className="">
+                    <span>From:</span>
+                    <DatePicker
+                        selected={this.state.startDate}
+                        onChange={this.handleChange}
+                    />
+                </div>
+                <div className="">
+                    <span>To:</span>
+                    <DatePicker
+                        selected={this.state.lastDate}
+                        onChange={this.handleChangeLast}
+                    />
+                </div>
+
+                <button type="buttom" onClick={this.search}>Go it!!</button>
+                {dat}
+            </div>
             <div className="table-style">
                 <table >
                     <thead>
                         <tr>
+                            <th>Transaction ID</th>
+                            <th>Source</th>
                             <th>Manufacture</th>
                             <th>Warehouse</th>
-                            <th>SaleID</th>
                             <th>StoreOrderID</th>
-                            <th>OrderDate</th>
+                            <th>SaleID</th>
+                            <th>Name Buyer</th>
                             <th>Qty</th>
-                            <th>Retail Price</th>
-                            <th>Total item Price</th>
-                            <th>Shipping</th>
-                            <th>Taxt</th>
+                            <th>Transaction Date</th>      
+                            <th>Gross Sale</th>
+                            <th>Transaction Commission</th>
+                            <th>Marketplace Fee</th>
+                            <th>Trasaction Tax</th>
+                            <th>Net</th>
+                            <th>Invoice Date</th>     
+                            <th>Total item Cost</th>
+                            <th>Shipping Cost</th>
+                            <th>Invoice Tax</th>
                             <th>Total Cost</th>
-                            <th>Marketplace Fees</th>
-                            <th>Margin Gross</th>
-                            <th>% Margin</th>
+                            <th>Margin Gross $</th>
+                            <th>Margin Gross %</th>
                             <th>Marketplace</th>
                             <th>Vendor</th>
-                            <th>PaymentID</th>
+                            <th>Month</th>
+                            <th>VendorInFba</th>
+                            <th>Date Insert</th>
+                            <th>Notes</th>
                         </tr>
                     </thead>
                     <tbody>

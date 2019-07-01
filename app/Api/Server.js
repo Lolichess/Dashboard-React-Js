@@ -50,7 +50,7 @@ router.get('/getData', (req, res) => {
         });*/
 
 		console.log("Connected!!");
-		var sql = "SELECT * FROM report_total";
+		var sql = "SELECT * FROM transaction_report WHERE transaction_report.saleID is not null";
 		con.query(sql,function(err,result){
 			if(err) throw err;
 			return res.json({success:true,data:result});
