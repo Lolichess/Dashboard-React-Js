@@ -5,7 +5,6 @@ import { FaChevronRight } from 'react-icons/fa';
 import { IconContext } from "react-icons";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import CsvDownload from 'react-json-to-csv'
 
 
 
@@ -29,6 +28,7 @@ class Table extends Component{
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeLast = this.handleChangeLast.bind(this);
         this.search = this.search.bind(this);
+        this.download = this.download.bind(this);
     }
 
     componentDidMount() {
@@ -41,6 +41,27 @@ class Table extends Component{
                 users: data['data'],
                 lastUsers : data['data'],
             })
+        })
+        .catch(console.log)
+    }
+
+    download = () =>{
+        fetch('http://localhost:3001/api/download_xlsx',{
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(this.state.users),
+        })
+        .then()
+        .then((data) => { 
+            fetch('http://localhost:3001/api/download')
+            .then()
+            .then((data) => {
+            })
+            .catch(console.log)
+           
         })
         .catch(console.log)
     }
@@ -87,12 +108,8 @@ class Table extends Component{
     search = () => {
 
         this.setState({
-            users :  this.state.lastUsers.filter( users => new Date(users.invoice_date) - this.state.startDate > 0 &&  this.state.lastDate   - new Date(users.invoice_date) > 0  ),
+            users :  this.state.lastUsers.filter( users => new Date(users.invoice_date) - this.state.startDate >= 0 &&  this.state.lastDate   - new Date(users.invoice_date) >= 0  ),
         });
-
-
-
-       
         console.log(this.state.startDate+" "+this.state.lastDate);
     }
 
@@ -131,10 +148,6 @@ class Table extends Component{
                             </tr>
                 }});
 
-                const dat = (
-
-                    <CsvDownload data={this.state.users} />
-                )
         return(
             
             <div className="table">
@@ -155,7 +168,7 @@ class Table extends Component{
                 </div>
 
                 <button type="buttom" onClick={this.search}>Go it!!</button>
-                {dat}
+                <button type="buttom" onClick={this.download}>download</button>
             </div>
             <div className="table-style">
                 <table >

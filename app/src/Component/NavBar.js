@@ -19,6 +19,11 @@ class NavBar extends Component{
                     name: 'Report Seller',
                     url : '/report',
                     icon : 'FaDollarSign',
+                },
+                {
+                    name: 'Invoice no Match',
+                    url : '/invoice',
+                    icon : 'FaDollarSign',
                 }
                 ,
                 {
