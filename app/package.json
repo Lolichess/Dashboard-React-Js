@@ -16,7 +16,7 @@
     "react-icons": "^3.7.0",
     "react-json-excel": "^1.0.0",
     "react-json-to-csv": "^1.0.4",
-    "react-native": "^0.59.9",
+    "react-native": "^0.62.3",
     "react-native-svg": "^9.5.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
